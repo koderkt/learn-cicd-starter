@@ -97,3 +97,8 @@ func main() {
 	// Start server
 	log.Fatal(srv.ListenAndServe())
 }
+
+func unused() {
+	// this function does nothing
+	// and is called nowhere
+}

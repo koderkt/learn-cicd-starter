@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (cfg *apiConfig) handlerNotesGet(w http.ResponseWriter, r *http.Request, user database.User) {
+func (cfg *apiConfig) handlerNotesGet(w http.ResponseWriter, r *http.Request, user database.User){
 	posts, err := cfg.DB.GetNotesForUser(r.Context(), user.ID)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Couldn't get posts for user")
@@ -18,11 +18,10 @@ func (cfg *apiConfig) handlerNotesGet(w http.ResponseWriter, r *http.Request, us
 	}
 
 	postsResp, err := databasePostsToPosts(posts)
-	if err != nil {
+	if err != nil{
 		log.Println(err)
 		respondWithError(w, http.StatusInternalServerError, "Couldn't convert posts")
-		return
-	}
+		return	}
 
 	respondWithJSON(w, http.StatusOK, postsResp)
 }

@@ -1,0 +1,16 @@
+on:
+  push:
+    branches: [main]
+  
+  jobs:
+    tests:
+        - name: Check out code
+          uses: actions/checkout@v4
+       
+        - name: Set up Go
+          uses: actions/setup-go@v5
+          with:
+            go-version: '1.22'
+
+        - name: Run Build script
+          run: ./scripts/buildprod.sh  

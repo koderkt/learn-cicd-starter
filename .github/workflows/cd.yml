@@ -19,24 +19,16 @@ jobs:
       - name: Run Build script
         run: ./scripts/buildprod.sh
 
-      
-
-      - name: Pre-requisites
-        run: sudo apt-get install apt-transport-https ca-certificates gnupg curl
-
-      - name: Install gcloud packages
-        run: curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-
-      - name : Install google-cloud sdk 
-        run: echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-
-      - name: Install google-cloud-cli 
-        run: sudo apt-get update && sudo apt-get install google-cloud-cli
-
       - name: Auth gcloud
         uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.NOTELY_GCP_SECRET }}"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Use gcloud CLI
+        run: gcloud info
 
       - name: Build image and submit
         run: gcloud builds submit --tag asia-south1-docker.pkg.dev/notely-431802/notely-ar-repo/notely:latest .

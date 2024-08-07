@@ -22,6 +22,7 @@ jobs:
       - name: Install pre-requisites
         run: sudo apt-get install apt-transport-https ca-certificates gnupg curl
 
-      - uses: "google-github-actions/auth@v2"
+      - name: Auth gcloud
+        uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.NOTELY_GCP_SECRET }}"
